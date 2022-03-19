@@ -19,11 +19,20 @@ import SearchBar from "./SearchBar";
 
 export default function Navbar() {
   return (
-    <Box background={"white"}>
+    <Box
+      as={"nav"}
+      background={"white"}
+      position="fixed"
+      top={0}
+      zIndex={"popover"}
+      w="full"
+    >
       <Container maxW={"container.lg"}>
         <Flex py={2} gap={4}>
           {/* logo  */}
-          <Heading size={"lg"} fontFamily="cursive">Remixgram</Heading>
+          <Heading size={"lg"} fontFamily="cursive">
+            Remixgram
+          </Heading>
           <Spacer />
           {/* search bar */}
           <SearchBar />

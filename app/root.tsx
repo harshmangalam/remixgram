@@ -1,11 +1,12 @@
 // root.tsx
 import React, { useContext, useEffect } from "react";
 import { withEmotionCache } from "@emotion/react";
-import { ChakraProvider } from "@chakra-ui/react";
-
+import { Box, ChakraProvider, Container } from "@chakra-ui/react";
+import globalCss from "~/styles/index.css";
 import { ServerStyleContext, ClientStyleContext } from "./context";
 import {
   Links,
+  LinksFunction,
   LiveReload,
   Meta,
   Outlet,
@@ -13,10 +14,20 @@ import {
   ScrollRestoration,
 } from "remix";
 import { theme } from "./theme";
+import Navbar from "./components/Navbar";
 
 interface DocumentProps {
   children: React.ReactNode;
 }
+
+export const links: LinksFunction = () => {
+  return [
+    {
+      rel: "stylesheet",
+      href: globalCss,
+    },
+  ];
+};
 
 const Document = withEmotionCache(
   ({ children }: DocumentProps, emotionCache) => {
@@ -73,7 +84,14 @@ export default function App() {
   return (
     <Document>
       <ChakraProvider theme={theme}>
-        <Outlet />
+        <Box bg={"gray.50"}>
+          <Navbar />
+          <Box as="main" py={"20"}>
+            <Container maxW={"container.lg"}>
+              <Outlet />
+            </Container>
+          </Box>
+        </Box>
       </ChakraProvider>
     </Document>
   );
