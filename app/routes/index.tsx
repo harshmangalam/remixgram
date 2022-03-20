@@ -15,7 +15,15 @@ import PostCard from "~/components/Posts/PostCard";
 import { Link } from "remix";
 export default function Home() {
   return (
-    <Grid templateColumns="repeat(3, 1fr)" gap={6}>
+    <Grid
+      templateColumns={[
+        "repeat(1, 1fr)",
+        "repeat(1, 1fr)",
+        "repeat(1, 1fr)",
+        "repeat(3, 1fr)",
+      ]}
+      gap={8}
+    >
       {/* left section   */}
       <GridItem colSpan={2}>
         {/* stories section  */}
@@ -27,6 +35,8 @@ export default function Home() {
           borderColor="gray.300"
           borderWidth={1}
           rounded="sm"
+          maxW={{ sm: "xl", lg: "full" }}
+          mx="auto"
         >
           {[...Array(10).keys()].map((story) => (
             <VStack>
@@ -42,7 +52,7 @@ export default function Home() {
           ))}
         </HStack>
         {/* posts section  */}
-        <Grid py={6} gap={6}>
+        <Grid py={6} gap={6} maxW={{ sm: "xl", lg: "full" }} mx="auto">
           {[...Array(1).keys()].map((post) => (
             <GridItem>
               <PostCard />
@@ -52,7 +62,7 @@ export default function Home() {
       </GridItem>
 
       {/* right section  */}
-      <GridItem>
+      <GridItem display={["none","none","none","block"]}>
         <Box position={"sticky"} top={20}>
           {/* profile section  */}
           <Flex align={"center"} gap={4}>

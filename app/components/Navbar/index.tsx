@@ -16,6 +16,7 @@ import { FaRegCompass, FaCompass } from "react-icons/fa";
 import { HiOutlineHeart, HiHeart } from "react-icons/hi";
 
 import SearchBar from "./SearchBar";
+import Account from "./Account";
 
 export default function Navbar() {
   return (
@@ -28,14 +29,16 @@ export default function Navbar() {
       w="full"
     >
       <Container maxW={"container.lg"}>
-        <Flex py={2} gap={4}>
+        <Flex py={2} gap={2} align="center">
           {/* logo  */}
           <Heading size={"lg"} fontFamily="cursive">
             Remixgram
           </Heading>
           <Spacer />
           {/* search bar */}
-          <SearchBar />
+          <Box display={["none", "none", "block"]}>
+            <SearchBar />
+          </Box>
           <Spacer />
           {/* navbar links */}
           <HStack>
@@ -73,18 +76,7 @@ export default function Navbar() {
               aria-label="Activity Feed"
             />
 
-            <IconButton
-              icon={
-                <Avatar
-                  src="https://avatars.githubusercontent.com/u/57381638?v=4"
-                  width={6}
-                  height={6}
-                />
-              }
-              variant={"outline"}
-              isRound={true}
-              aria-label="Profile"
-            />
+            <Account />
           </HStack>
         </Flex>
       </Container>
