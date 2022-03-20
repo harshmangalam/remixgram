@@ -1,12 +1,10 @@
 import {
-  Avatar,
   Box,
   Container,
   Flex,
   Heading,
   HStack,
   IconButton,
-  Image,
   Spacer,
 } from "@chakra-ui/react";
 import { HomeIcon } from "../Icons";
@@ -16,7 +14,8 @@ import { FaRegCompass, FaCompass } from "react-icons/fa";
 import { HiOutlineHeart, HiHeart } from "react-icons/hi";
 
 import SearchBar from "./SearchBar";
-import Account from "./Account";
+import AccountMenu from "./AccountMenu";
+import CreatePostModal from "./CreatePostModal";
 
 export default function Navbar() {
   return (
@@ -44,39 +43,34 @@ export default function Navbar() {
           <HStack>
             <IconButton
               icon={<HomeIcon boxSize={6} />}
-              variant={"outline"}
+              variant={"ghost"}
               isRound={true}
               aria-label="Home"
             />
 
             <IconButton
               icon={<RiMessengerLine size={24} />}
-              variant={"outline"}
+              variant={"ghost"}
               isRound={true}
               aria-label="Messenger"
             />
 
+            <CreatePostModal />
             <IconButton
-              icon={<CgAddR size={24} />}
-              variant={"outline"}
-              isRound={true}
-              aria-label="Create Post"
-            />
-            <IconButton
-              variant={"outline"}
+              variant={"ghost"}
               isRound={true}
               aria-label="Find People"
               icon={<FaRegCompass size={24} />}
             />
 
             <IconButton
-              variant={"outline"}
+              variant={"ghost"}
               isRound={true}
               icon={<HiOutlineHeart size={24} />}
               aria-label="Activity Feed"
             />
 
-            <Account />
+            <AccountMenu />
           </HStack>
         </Flex>
       </Container>

@@ -9,15 +9,15 @@ import {
 } from "@chakra-ui/react";
 import { CgProfile } from "react-icons/cg";
 import { RiBookmarkLine } from "react-icons/ri";
-import SettingIcon from "../Icons/Setting";
-import SwitchIcon from "../Icons/Switch";
 
-export default function Account() {
+import { SwitchIcon, SettingIcon } from "../Icons/";
+
+export default function AccountMenu() {
   return (
     <Menu isLazy={true}>
       <MenuButton
         as={IconButton}
-        variant={"outline"}
+        variant={"ghost"}
         isRound={true}
         aria-label="Profile"
         icon={
