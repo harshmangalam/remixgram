@@ -16,6 +16,7 @@ import { HiOutlineHeart, HiHeart } from "react-icons/hi";
 import SearchBar from "./SearchBar";
 import AccountMenu from "./AccountMenu";
 import CreatePostModal from "./CreatePostModal";
+import ActivityFeedPopup from "./ActivityFeedPopup";
 
 export default function Navbar() {
   return (
@@ -63,12 +64,7 @@ export default function Navbar() {
               icon={<FaRegCompass size={24} />}
             />
 
-            <IconButton
-              variant={"ghost"}
-              isRound={true}
-              icon={<HiOutlineHeart size={24} />}
-              aria-label="Activity Feed"
-            />
+            <ActivityFeedPopup />
 
             <AccountMenu />
           </HStack>
