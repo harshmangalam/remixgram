@@ -37,6 +37,27 @@ export default function Home() {
           rounded="sm"
           maxW={{ sm: "xl", lg: "full" }}
           mx="auto"
+          css={{
+            /* width */
+            "::-webkit-scrollbar": {
+              height: "8px",
+            },
+
+            /* Track */
+            "::-webkit-scrollbar-track": {
+              display: "none",
+            },
+
+            /* Handle */
+            "::-webkit-scrollbar-thumb ": {
+              backgroundColor: "#BEE3F8",
+            },
+
+            /* Handle on hover */
+            "::-webkit-scrollbar-thumb:hover": {
+              background: "#90CDF4",
+            },
+          }}
         >
           {[...Array(10).keys()].map((story) => (
             <VStack>
@@ -62,7 +83,7 @@ export default function Home() {
       </GridItem>
 
       {/* right section  */}
-      <GridItem display={["none","none","none","block"]}>
+      <GridItem display={["none", "none", "none", "block"]}>
         <Box position={"sticky"} top={20}>
           {/* profile section  */}
           <Flex align={"center"} gap={4}>
