@@ -15,6 +15,7 @@ import {
 } from "remix";
 import { theme } from "./theme";
 import Navbar from "./components/Navbar";
+import BottomSheet from "./components/BottomSheet";
 
 interface DocumentProps {
   children: React.ReactNode;
@@ -90,6 +91,9 @@ export default function App() {
             <Container maxW={"container.lg"}>
               <Outlet />
             </Container>
+          </Box>
+          <Box display={["block", "none"]}>
+            <BottomSheet />
           </Box>
         </Box>
       </ChakraProvider>

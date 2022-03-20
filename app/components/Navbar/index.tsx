@@ -25,7 +25,7 @@ export default function Navbar() {
       background={"white"}
       position="fixed"
       top={0}
-      zIndex={"popover"}
+      zIndex={"overlay"}
       w="full"
     >
       <Container maxW={"container.lg"}>
@@ -42,30 +42,30 @@ export default function Navbar() {
           <Spacer />
           {/* navbar links */}
           <HStack>
-            <IconButton
-              icon={<HomeIcon boxSize={6} />}
-              variant={"ghost"}
-              isRound={true}
-              aria-label="Home"
-            />
+            <HStack display={["none", "flex"]}>
+              <IconButton
+                icon={<HomeIcon boxSize={6} />}
+                variant={"ghost"}
+                isRound={true}
+                aria-label="Home"
+              />
 
-            <IconButton
-              icon={<RiMessengerLine size={24} />}
-              variant={"ghost"}
-              isRound={true}
-              aria-label="Messenger"
-            />
+              <IconButton
+                icon={<RiMessengerLine size={24} />}
+                variant={"ghost"}
+                isRound={true}
+                aria-label="Messenger"
+              />
 
+              <IconButton
+                variant={"ghost"}
+                isRound={true}
+                aria-label="Find People"
+                icon={<FaRegCompass size={24} />}
+              />
+            </HStack>
             <CreatePostModal />
-            <IconButton
-              variant={"ghost"}
-              isRound={true}
-              aria-label="Find People"
-              icon={<FaRegCompass size={24} />}
-            />
-
             <ActivityFeedPopup />
-
             <AccountMenu />
           </HStack>
         </Flex>

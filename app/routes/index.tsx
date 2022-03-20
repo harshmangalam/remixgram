@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import PostCard from "~/components/Posts/PostCard";
 import { Link } from "remix";
+import Footer from "~/components/Footer";
 export default function Home() {
   return (
     <Grid
@@ -143,6 +144,7 @@ export default function Home() {
               ))}
             </VStack>
           </Box>
+          <Footer />
         </Box>
       </GridItem>
     </Grid>
