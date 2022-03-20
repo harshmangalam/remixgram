@@ -85,9 +85,9 @@ export default function App() {
   return (
     <Document>
       <ChakraProvider theme={theme}>
-        <Box bg={"gray.50"}>
+        <Box bg={"gray.50"} display="flex">
           <Navbar />
-          <Box as="main" py={"20"}>
+          <Box as="main" py={"20"} minH="100vh" w="full">
             <Container maxW={"container.lg"}>
               <Outlet />
             </Container>

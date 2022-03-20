@@ -16,9 +16,10 @@ import { Link } from "remix";
 import { BsThreeDots } from "react-icons/bs";
 import { HiOutlineHeart, HiHeart } from "react-icons/hi";
 import { IoChatbubbleOutline } from "react-icons/io5";
-import EmojiIcon from "../Icons/Emoji";
+import { EmojiIcon } from "~/components/Icons";
 import { FiSend } from "react-icons/fi";
 import { RiBookmarkLine, RiBookmarkFill } from "react-icons/ri";
+import PostAction from "./PostAction";
 export default function PostCard() {
   return (
     <Box rounded={"sm"} borderColor="gray.300" borderWidth={1} bg="white">
@@ -33,11 +34,7 @@ export default function PostCard() {
         </HStack>
         <Spacer />
         {/* post action  */}
-        <IconButton
-          isRound={true}
-          aria-label="Post Action"
-          icon={<BsThreeDots />}
-        />
+        <PostAction />
       </Flex>
 
       {/* post media  */}
