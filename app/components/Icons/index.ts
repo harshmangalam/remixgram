@@ -5,3 +5,4 @@ export { default as EmojiIcon } from "./Emoji";
 export { default as SettingIcon } from "./Setting";
 export { default as SwitchIcon } from "./Switch";
 export { default as ImageIcon } from "./Image";
+export { default as TagProfile } from "./TagProfile";
