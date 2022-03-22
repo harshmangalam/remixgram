@@ -12,7 +12,7 @@ import { RiMessengerLine } from "react-icons/ri";
 import { CgAddR } from "react-icons/cg";
 import { FaRegCompass, FaCompass } from "react-icons/fa";
 import { HiOutlineHeart, HiHeart } from "react-icons/hi";
-
+import { Link, NavLink } from "remix";
 import SearchBar from "./SearchBar";
 import AccountMenu from "./AccountMenu";
 import CreatePostModal from "./CreatePostModal";
@@ -31,7 +31,7 @@ export default function Navbar() {
       <Container maxW={"container.lg"}>
         <Flex py={2} gap={2} align="center">
           {/* logo  */}
-          <Heading size={"lg"} fontFamily="cursive">
+          <Heading as={Link} to="/" size={"lg"} fontWeight="medium">
             Remixgram
           </Heading>
           <Spacer />
@@ -43,26 +43,20 @@ export default function Navbar() {
           {/* navbar links */}
           <HStack>
             <HStack display={["none", "flex"]}>
-              <IconButton
-                icon={<HomeIcon boxSize={6} />}
-                variant={"ghost"}
-                isRound={true}
-                aria-label="Home"
-              />
-
-              <IconButton
-                icon={<RiMessengerLine size={24} />}
-                variant={"ghost"}
-                isRound={true}
-                aria-label="Messenger"
-              />
-
-              <IconButton
-                variant={"ghost"}
-                isRound={true}
-                aria-label="Find People"
-                icon={<FaRegCompass size={24} />}
-              />
+              {links.map((link) => (
+                <IconButton
+                  as={NavLink}
+                  key={link.name}
+                  icon={link.icon}
+                  variant={"ghost"}
+                  isRound={true}
+                  aria-label={link.name}
+                  to={link.to}
+                  _activeLink={{
+                    fontWeight:"800"
+                  }}
+                />
+              ))}
             </HStack>
             <CreatePostModal />
             <ActivityFeedPopup />
@@ -73,3 +67,24 @@ export default function Navbar() {
     </Box>
   );
 }
+
+const links = [
+  {
+    name: "Home",
+    icon: <HomeIcon boxSize={6} />,
+    variant: "ghost",
+    to: "/",
+  },
+  {
+    name: "Messenger",
+    icon: <RiMessengerLine size={24} />,
+    variant: "ghost",
+    to: "/messenger",
+  },
+  {
+    name: "Explore Posts",
+    icon: <FaRegCompass size={24} />,
+    variant: "ghost",
+    to: "/explore",
+  },
+];

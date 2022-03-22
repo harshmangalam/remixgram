@@ -31,8 +31,8 @@ export default function CreatePostModal() {
         <ModalContent>
           <ModalHeader>Create new post</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            <VStack spacing={2}>
+          <ModalBody >
+            <VStack spacing={2} minH={"96"} justify="center">
               <ImageIcon boxSize={"24"} />
               <VStack spacing={4}>
                 <Text fontSize={"xl"}>Drag photos and videos here</Text>
