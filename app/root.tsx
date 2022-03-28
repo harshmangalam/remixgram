@@ -14,7 +14,6 @@ import {
   ScrollRestoration,
 } from "remix";
 import { theme } from "./theme";
-import Navbar from "./components/Navbar";
 import BottomSheet from "./components/BottomSheet";
 
 interface DocumentProps {
@@ -85,16 +84,8 @@ export default function App() {
   return (
     <Document>
       <ChakraProvider theme={theme}>
-        <Box bg={"gray.50"} display="flex">
-          <Navbar />
-          <Box as="main" py={"20"} minH="100vh" w="full">
-            <Container maxW={"container.lg"}>
-              <Outlet />
-            </Container>
-          </Box>
-          <Box display={["block", "none"]}>
-            <BottomSheet />
-          </Box>
+        <Box minH={"100vh"} h="full" bg={"gray.50"}>
+          <Outlet />
         </Box>
       </ChakraProvider>
     </Document>
