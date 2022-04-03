@@ -17,13 +17,27 @@ model User {
   password          String
   website           String?
   bio               String?
-  email             String?      @unique
+  email             String?     @unique
   phone             String?     @unique
   gender            UserGender?
   similarSuggestion Boolean     @default(true)
   profilePic        String?
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
+  posts             Post[]      @relation("UserPostsCreated")
+  likedPosts        Post[]      @relation("UsersPostsLike")
+
+}
+
+model Post {
+  id        String   @id @default(uuid())
+  user      User     @relation(name: "UserPostsCreated", fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  media     Json
+  content   String?
+  likes     User[]   @relation("UsersPostsLike")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum UserGender {

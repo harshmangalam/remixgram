@@ -12,10 +12,40 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import PostCard from "~/components/Posts/PostCard";
-import { Link } from "remix";
+import { json, Link, LoaderFunction, useLoaderData } from "remix";
 import Footer from "~/components/Footer";
 import MainLayout from "~/layouts/MainLayout";
+import { Post } from "@prisma/client";
+import { db } from "~/utils/db.server";
+
+type LoaderData = { posts: Post[] };
+
+export const loader: LoaderFunction = async () => {
+  const data: LoaderData = {
+    posts: await db.post.findMany({
+      take: 4,
+      include: {
+        _count: {
+          select: {
+            likes: true,
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            name: true,
+            username: true,
+            profilePic: true,
+          },
+        },
+      },
+    }),
+  };
+
+  return json(data);
+};
 export default function Home() {
+  const data = useLoaderData<LoaderData>();
   return (
     <MainLayout>
       <Grid
@@ -31,7 +61,7 @@ export default function Home() {
         <GridItem colSpan={2}>
           {/* stories section  */}
 
-          <HStack
+          {/* <HStack
             overflowX={"auto"}
             bg="white"
             p={"4"}
@@ -53,12 +83,12 @@ export default function Home() {
                 </Text>
               </VStack>
             ))}
-          </HStack>
+          </HStack> */}
           {/* posts section  */}
-          <Grid py={6} gap={6} maxW={{ sm: "xl", lg: "full" }} mx="auto">
-            {[...Array(1).keys()].map((post) => (
+          <Grid gap={6} maxW={{ sm: "xl", lg: "full" }} mx="auto">
+            {data.posts.map((post) => (
               <GridItem>
-                <PostCard />
+                <PostCard key={post.id} post={post} />
               </GridItem>
             ))}
           </Grid>
