@@ -1,5 +1,6 @@
 import { db } from "./db.server";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 type LoginForm = {
   username: string;
@@ -18,11 +19,9 @@ export async function login({ username, password }: LoginForm) {
   // username can be username , email or phone
   // check one by one if it match any fields in database
 
-  const user = await db.user.findUnique({
+  const user = await db.user.findFirst({
     where: {
-      username,
-      email: username,
-      phone: username,
+      OR: [{ username }, { email: username }, { phone: username }],
     },
     select: {
       id: true,
@@ -40,8 +39,15 @@ export async function login({ username, password }: LoginForm) {
   if (!isPasswordMatch) {
     return [true, "Password is incorrect"];
   }
+  const token = jwt.sign(
+    { userId: user.id },
+    process.env.JWT_SECRET as string,
+    {
+      expiresIn: "12h",
+    }
+  );
 
-  return [false, user.id];
+  return [false, token];
 }
 
 export async function signup({
@@ -52,28 +58,39 @@ export async function signup({
   email,
 }: SignupForm) {
   // check one by one if uniques fields already exists
-  const user = await db.user.findFirst({
+  let user = await db.user.findUnique({
     where: {
-      OR: [
-        {
-          username,
-        },
-        {
-          phone,
-        },
-        { email },
-      ],
+      username,
     },
   });
 
   if (user) {
-    return [true, "User already exists"];
+    return [true, "Username already exists"];
   }
 
-//   create hash of plain password 
+  user = await db.user.findUnique({
+    where: {
+      phone,
+    },
+  });
+
+  if (user) {
+    return [true, "Phone number already registered"];
+  }
+  user = await db.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
+  if (user) {
+    return [true, "Email address already registered"];
+  }
+
+  //   create hash of plain password
   const hashPassword = await bcrypt.hash(password, 10);
 
-  const newUser = await db.user.create({
+  await db.user.create({
     data: {
       name,
       email,

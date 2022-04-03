@@ -40,27 +40,6 @@ export default function Home() {
             rounded="sm"
             maxW={{ sm: "xl", lg: "full" }}
             mx="auto"
-            css={{
-              /* width */
-              "::-webkit-scrollbar": {
-                height: "8px",
-              },
-
-              /* Track */
-              "::-webkit-scrollbar-track": {
-                display: "none",
-              },
-
-              /* Handle */
-              "::-webkit-scrollbar-thumb ": {
-                backgroundColor: "#BEE3F8",
-              },
-
-              /* Handle on hover */
-              "::-webkit-scrollbar-thumb:hover": {
-                background: "#90CDF4",
-              },
-            }}
           >
             {[...Array(10).keys()].map((story) => (
               <VStack>

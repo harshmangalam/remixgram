@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Box,
   Button,
   Center,
@@ -14,15 +17,59 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { FaFacebook } from "react-icons/fa";
-import { Link } from "remix";
+import {
+  ActionFunction,
+  Link,
+  redirect,
+  json,
+  useActionData,
+  Form,
+} from "remix";
+import { login } from "~/utils/auth.server";
+import { accessToken } from "~/utils/cookies";
 
+type ActionData = {
+  formError?: string;
+  fieldErrors?: {
+    username: string | undefined;
+    password: string | undefined;
+  };
+  fields?: {
+    username: string;
+    password: string;
+  };
+};
+
+export const action: ActionFunction = async ({ request }) => {
+  const form = await request.formData();
+
+  const username = form.get("username") as string;
+  const password = form.get("password") as string;
+
+  const fields = {
+    username,
+    password,
+  };
+
+  const [isError, data] = await login(fields);
+  if (isError) {
+    return json({ formError: data }, 400);
+  }
+
+  return redirect("/", {
+    headers: {
+      "Set-Cookie": await accessToken.serialize(data),
+    },
+  });
+};
 export default function AuthLogin() {
   const [show, setShow] = useState(false);
+  const actionData = useActionData<ActionData>();
   return (
     <Box py={10}>
       <Box>
         <Box
-          maxW={"lg"}
+          maxW={"md"}
           mx="auto"
           bg={"white"}
           p={4}
@@ -32,45 +79,70 @@ export default function AuthLogin() {
           <Heading textAlign={"center"} fontSize={"2xl"}>
             Remixgram
           </Heading>
-          <Box as="form" mt={8}>
+
+          {actionData?.formError && (
+            <Alert mt={4} status="error" variant={"left-accent"}>
+              <AlertIcon />
+              <AlertDescription>{actionData.formError}</AlertDescription>
+            </Alert>
+          )}
+
+          <Box as={Form} method="post" mt={8}>
             <VStack align={"start"} spacing={4}>
-              <Input
-                placeholder=" Phone number, username or email"
-                id="username"
-                type="text"
-                name="username"
-              />
-
-              <InputGroup size="md">
+              <FormControl>
+                <FormLabel htmlFor="username">
+                  Phone number, username or email
+                </FormLabel>
                 <Input
-                  id="password"
-                  type={show ? "text" : "password"}
-                  name="password"
-                  pr="4.5rem"
-                  placeholder="Password"
+                  placeholder=" Phone number, username or email"
+                  id="username"
+                  type="text"
+                  name="username"
                 />
-                <InputRightElement width="4.5rem">
-                  <Button
-                    variant={"unstyled"}
-                    size="sm"
-                    onClick={() => setShow(!show)}
-                  >
-                    {show ? "Hide" : "Show"}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
+              </FormControl>
 
-              <Button isFullWidth colorScheme={"blue"}>
+              <FormControl>
+                <FormLabel htmlFor="password">Password</FormLabel>
+                <InputGroup size="md">
+                  <Input
+                    id="password"
+                    type={show ? "text" : "password"}
+                    name="password"
+                    pr="4.5rem"
+                    placeholder="Password"
+                  />
+                  <InputRightElement width="4.5rem">
+                    <Button
+                      variant={"unstyled"}
+                      size="sm"
+                      onClick={() => setShow(!show)}
+                    >
+                      {show ? "Hide" : "Show"}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+
+              <Button type="submit" isFullWidth colorScheme={"blue"}>
                 Login
               </Button>
             </VStack>
 
             <VStack mt={4} spacing={0}>
-              <Button colorScheme={"blue"} variant={"ghost"} leftIcon={<FaFacebook />}>
+              <Button
+                colorScheme={"blue"}
+                variant={"ghost"}
+                leftIcon={<FaFacebook />}
+              >
                 Log in with Facebook
               </Button>
-              <Button size={"sm"} as={Link} to="/account/forgotten-password" variant={"ghost"}>
-                Forgotten  your password ?
+              <Button
+                size={"sm"}
+                as={Link}
+                to="/account/forgotten-password"
+                variant={"ghost"}
+              >
+                Forgotten your password ?
               </Button>
             </VStack>
           </Box>
@@ -78,7 +150,7 @@ export default function AuthLogin() {
 
         <Box
           mt={4}
-          maxW={"lg"}
+          maxW={"md"}
           mx="auto"
           bg={"white"}
           p={4}
